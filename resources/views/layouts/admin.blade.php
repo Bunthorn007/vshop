@@ -13,9 +13,7 @@
 <div class="layout-header">
     <div class="navbar navbar-default">
         <div class="navbar-header">
-            <a class="navbar-brand navbar-brand-center" href="index-2.html">
-                <img class="navbar-brand-logo" src="img/logo-inverse.svg" alt="Elephant">
-            </a>
+            @yield('logo')
             <button class="navbar-toggler visible-xs-block collapsed" type="button" data-toggle="collapse" data-target="#sidenav">
                 <span class="sr-only">Toggle navigation</span>
             <span class="bars">
@@ -145,10 +143,7 @@
                         </div>
                     </li>
                     <li class="dropdown hidden-xs">
-                        <button class="navbar-account-btn" data-toggle="dropdown" aria-haspopup="true">
-                            <img class="rounded" width="36" height="36" src="img/0180441436.jpg" alt="Teddy Wilson"> Teddy Wilson
-                            <span class="caret"></span>
-                        </button>
+                        @yield('user_icon')
                         <ul class="dropdown-menu dropdown-menu-right">
                             <li class="navbar-upgrade-version">User Management</li>
                             <li class="divider"></li>
@@ -181,8 +176,69 @@
     </div>
 </div>
 <div class="layout-main">
+    <?php
+        $dashboard = "";
+        $user_select = "";
 
-    @yield('sidebar')
+        if(Request::is('admin'))
+            $dashboard = "active";
+        if(Request::is('admin/user/create'))
+            $user_select = "active";
+        if(Request::is('admin/user'))
+            $user_select = "active";
+        if(Request::is('admin/user/trash'))
+            $user_select = "active";
+    ?>
+    <div class="layout-sidebar">
+        <div class="layout-sidebar-backdrop"></div>
+        <div class="layout-sidebar-body">
+            <nav id="sidenav" class="sidenav-collapse collapse">
+                <ul class="sidenav">
+                    <li class="sidenav-search hidden-md hidden-lg">
+                        <form class="sidenav-form" action="http://demo.naksoid.com/">
+                            <div class="form-group form-group-sm">
+                                <div class="input-with-icon">
+                                    <input class="form-control" type="text" placeholder="Search…">
+                                    <span class="icon icon-search input-icon"></span>
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+                    <li class="sidenav-heading"><?php echo Request::is('admin/user'); ?>Navigation</li>
+                    <li class="sidenav-item <?php echo $dashboard; ?>">
+                        <a href="/admin/">
+                            <span class="sidenav-icon icon icon-dashboard"></span>
+                            <span class="sidenav-label">Dashboards</span>
+                        </a>
+                    </li>
+                    <li class="sidenav-item has-subnav <?php echo $user_select; ?>">
+                        <a href="#" aria-haspopup="true">
+                            <span class="sidenav-icon icon icon-group"></span>
+                            <span class="sidenav-label">User Management</span>
+                        </a>
+                        <ul class="sidenav-subnav collapse">
+                            <li class="sidenav-subheading">User Management</li>
+                            <li>
+                                <a href="/admin/user/create">
+                                    <span class="sidenav-icon icon icon-pencil-square-o"></span>Create User
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/user/">
+                                    <span class="sidenav-icon icon icon-th-large"></span>Manage User
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/user/trash">
+                                    <span class="sidenav-icon icon icon-trash-o"></span>Trash
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
 
     <div class="layout-content">
         <div class="layout-content-body">

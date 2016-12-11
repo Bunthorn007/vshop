@@ -15,8 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin', function(){
+Route::get('/admin','AdminUserController@dashboard');
 
-    return view('admin.dashboard');
+Route::get('/admin/user/trash', 'AdminUserController@trash');
 
-});
+Route::resource('/admin/user', 'AdminUserController');
